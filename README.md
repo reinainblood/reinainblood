@@ -35,11 +35,16 @@
 ![Kubernetes](https://img.shields.io/badge/-Kubernetes-black?style=flat-square&logo=kubernetes)
 
 ## 🌟 Open Source projects I am actively contributing to (early stages, not much to show yet!)
-[![Flipt.io]([(https://github.com/flipt-io))]
+
+🟣 [Flipt.io](https://github.com/flipt-io) <br>
+🟣 [f3d](https://github.com/f3d-app/f3d) <br>
+🟣 [Prometheus](https://github.com/prometheus) <br>
+🟣 [Ghost Call] (https://github.com/darknode66/darknodetest) - still in dev
 
 ## 🌟 Featured Projects
 
-[![Readme Card]((https://github.com/reinainblood/interview-buddy))](https://github.com/reinainblood/interview-buddy)
+🟣 [interview-buddy](https://github.com/reinainblood/interview-buddy)
+🟣 [Personal blog, made with Go/Hugo](https://reinainblood.github.io)
 
 ## 🤝 Connect With Me
 
