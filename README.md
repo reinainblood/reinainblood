@@ -18,10 +18,10 @@
 [![Your GitHub stats](https://github-readme-stats-six-delta-99.vercel.app/api?username=reinainblood&show_icons=true&show_private=true&theme=midnight-purple)](https://github.com/anuraghazra/github-readme-stats) 
 
 </div>
-
-<div align="center" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;"> <img src="https://github-profile-widgets.vercel.app
-/api/og?type=issues&count=5" alt="Assigned Issues" style="max-width: 100%; height: auto;"> <img src="https://github-profile-widgets.vercel.app
-/api/og?type=activities&count=5" alt="Recent Activity" style="max-width: 100%; height: auto;"> </div>
+<div align="center">
+  <img src="https://github-profile-widgets.vercel.app/api/og?type=issues" alt="Assigned Issues" width="45%">
+  <img src="https://github-profile-widgets.vercel.app/api/og?type=activities" alt="Recent Activity" width="45%">
+</div>
 
  🛠️ Technologies & Tools
 
