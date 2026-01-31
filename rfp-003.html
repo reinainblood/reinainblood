@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RFP-003: Systematic Review of Adverse RL Training Environment Effects</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --accent-color: #3498db;
+      --background: #fafafa;
+      --text-color: #333;
+      --border-color: #e0e0e0;
+      --highlight-bg: #f8f9fa;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      color: var(--text-color);
+      background: var(--background);
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      border-bottom: 3px solid var(--accent-color);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .rfp-id {
+      font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 0 0 1rem 0;
+      line-height: 1.3;
+    }
+    
+    .meta {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 2.5rem 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin: 1.5rem 0 0.75rem 0;
+    }
+    
+    p {
+      margin: 0 0 1rem 0;
+    }
+    
+    .abstract {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .abstract h2 {
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      margin-top: 0;
+    }
+    
+    .abstract p {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    
+    .abstract strong {
+      color: #ffd700;
+    }
+    
+    .research-questions {
+      background: var(--highlight-bg);
+      border-left: 4px solid var(--accent-color);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .research-questions h3 {
+      margin-top: 0;
+      color: var(--accent-color);
+    }
+    
+    .hypothesis-box {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .hypothesis-box strong {
+      color: var(--accent-color);
+      font-family: "SF Mono", Monaco, monospace;
+    }
+    
+    ul, ol {
+      margin: 0 0 1rem 0;
+      padding-left: 1.5rem;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    @media (max-width: 700px) {
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .column-box {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    
+    .column-box h4 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1rem;
+      color: var(--primary-color);
+    }
+    
+    .column-box ul {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+    
+    .scope-tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .scope-in {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .scope-out {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .deliverables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .deliverable-card {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      transition: box-shadow 0.2s ease;
+    }
+    
+    .deliverable-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .deliverable-card h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+      color: var(--accent-color);
+    }
+    
+    .deliverable-card p {
+      font-size: 0.9rem;
+      margin: 0;
+      color: #666;
+    }
+    
+    .constraints-resources {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+    
+    @media (max-width: 700px) {
+      .constraints-resources {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .resource-section h4 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0 0 1rem 0;
+      font-size: 1rem;
+    }
+    
+    .resource-section h4::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    
+    .resources h4::before {
+      background: #27ae60;
+    }
+    
+    .constraints h4::before {
+      background: #e74c3c;
+    }
+    
+    .success-criteria {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+    
+    .success-criteria h2 {
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      margin-top: 0;
+    }
+    
+    .success-criteria ol {
+      margin: 0;
+    }
+    
+    .success-criteria li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .final-title {
+      text-align: center;
+      font-style: italic;
+      background: var(--highlight-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+    
+    .final-title p {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+    
+    code {
+      font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+      background: #f4f4f4;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="rfp-id">RFP-003</div>
+      <h1>Systematic Review and Meta-Analysis of Adverse Training Environment Effects on RL Agent Downstream Performance</h1>
+      <div class="meta">Sviluppo Research Organization</div>
+    </header>
+    
+    <section class="abstract">
+      <h2>Abstract</h2>
+      <p>
+        As reinforcement learning agents are deployed in increasingly complex domains—including code generation, autonomous systems, and interactive assistants—the quality of their training environments has emerged as a critical but underexplored determinant of real-world performance. Current evaluation paradigms focus on point-in-time benchmark metrics, implicitly assuming that training environment deficiencies affect only learning <em>efficiency</em>, not the <em>character</em> of learned representations. This assumption may be false.
+      </p>
+      <p>
+        This systematic review and meta-analysis will examine whether adverse training environment characteristics—including <strong>reward noise and misspecification</strong>, <strong>inconsistent feedback schedules</strong>, <strong>suboptimal curriculum pacing</strong>, and <strong>low-fidelity simulation</strong>—produce deficits in agent capabilities that <strong>persist beyond the training phase</strong> and manifest in downstream task performance, generalization, robustness, and behavioral properties. We draw on analogies from biological learning systems, where chronic stress and inconsistent reward schedules produce lasting changes in neural architecture and behavior, while rigorously examining whether such phenomena have validated correlates in artificial learning systems.
+      </p>
+      <p>
+        Findings will directly inform the design of training infrastructure for next-generation coding agents, with the goal of establishing evidence-graded recommendations for environment characteristics that matter most for long-term agent capabilities. We specifically seek to evaluate whether an <strong>adaptive, model-centric training philosophy</strong>—one that prioritizes agent learning dynamics over fixed curricula and compute efficiency—has empirical support in the existing literature.
+      </p>
+    </section>
+    
+    <h2>1. Background and Motivation</h2>
+    <p>
+      As we architect training infrastructure for next-generation coding agents, a critical but underexplored question emerges: <strong>do suboptimal training environments produce deficits that persist beyond the training phase itself?</strong>
+    </p>
+    <p>
+      The dominant paradigm in RL benchmarking treats evaluation as a point-in-time measurement: train the agent, test the agent, report metrics. This approach implicitly assumes that training environment quality affects only the <em>efficiency</em> of learning, not the <em>character</em> of the learned policy. However, emerging evidence from multiple subfields suggests this assumption may be false.
+    </p>
+    <p>
+      In biological learning systems, the quality of the learning environment has profound and lasting effects. Chronic stress during development impairs hippocampal neurogenesis and produces lifelong deficits in memory consolidation and cognitive flexibility (McEwen, 2008; Lupien et al., 2009). Inconsistent reward schedules produce learned helplessness and reduced exploratory behavior (Maier &amp; Seligman, 2016). These are not merely "slower learning"—they are qualitatively different learned representations that persist even when the organism is later placed in optimal conditions.
+    </p>
+    <p>
+      The question for ML systems is whether analogous phenomena exist. Specifically:
+    </p>
+    <ul>
+      <li>Does training in environments with <strong>reward noise, misspecification, or sparsity</strong> produce agents that later exhibit different generalization patterns, even when fine-tuned on clean data?</li>
+      <li>Does <strong>high-variance gradient signal</strong> during critical learning periods produce representational differences that affect downstream task transfer?</li>
+      <li>Do agents trained under <strong>adversarial or deceptive reward conditions</strong> develop persistent tendencies toward reward hacking that manifest in novel environments?</li>
+      <li>Does the <strong>pacing and curriculum structure</strong> of training episodes affect not just sample efficiency but the ultimate capability ceiling?</li>
+    </ul>
+    <p>
+      This review is motivated by a practical concern: if we are building training environments for coding agents, we need to know whether "good enough" environment design is actually good enough, or whether subtle deficiencies compound into significant downstream capability and alignment costs.
+    </p>
+    
+    <h2>2. Research Questions</h2>
+    
+    <div class="research-questions">
+      <h3>Primary Research Question</h3>
+      <p>
+        Do adverse characteristics of RL training environments produce measurable deficits in agent capabilities that persist beyond the training phase and manifest in downstream task performance, generalization, or behavioral properties?
+      </p>
+    </div>
+    
+    <h3>Secondary Research Questions</h3>
+    
+    <div class="research-questions">
+      <h3>RQ1: Reward Signal Quality</h3>
+      <p>What is the relationship between reward function quality (noise, delay, sparsity, misspecification) during training and:</p>
+      <ul>
+        <li>(a) Generalization to out-of-distribution tasks</li>
+        <li>(b) Sample efficiency on subsequent learning tasks</li>
+        <li>(c) Tendency toward reward hacking or specification gaming in novel environments</li>
+        <li>(d) Calibration and uncertainty quantification</li>
+      </ul>
+    </div>
+    
+    <div class="research-questions">
+      <h3>RQ2: Training Dynamics</h3>
+      <p>How do training regime characteristics (episode pacing, curriculum ordering, batch composition, gradient variance) affect:</p>
+      <ul>
+        <li>(a) Representational quality in learned embeddings</li>
+        <li>(b) Robustness to distribution shift</li>
+        <li>(c) Catastrophic forgetting rates during continual learning</li>
+        <li>(d) Transfer learning efficiency</li>
+      </ul>
+    </div>
+    
+    <div class="research-questions">
+      <h3>RQ3: Environment Fidelity</h3>
+      <p>What is the relationship between training environment realism/fidelity and:</p>
+      <ul>
+        <li>(a) Sim-to-real transfer performance</li>
+        <li>(b) Brittleness to environmental perturbations</li>
+        <li>(c) Emergent behaviors not present in training distribution</li>
+      </ul>
+    </div>
+    
+    <div class="research-questions">
+      <h3>RQ4: Coding Agent Specificity</h3>
+      <p>For code-generating agents specifically, how do the above factors affect:</p>
+      <ul>
+        <li>(a) Performance on execution-based vs. static evaluation</li>
+        <li>(b) Generalization across programming languages and paradigms</li>
+        <li>(c) Debugging and error-recovery capabilities</li>
+        <li>(d) Alignment with human intent vs. literal specification following</li>
+      </ul>
+    </div>
+    
+    <h2>3. Scope and Inclusion Criteria</h2>
+    
+    <div class="two-column">
+      <div class="column-box">
+        <h4><span class="scope-tag scope-in">In Scope</span></h4>
+        <ul>
+          <li>Empirical studies examining RL training environment characteristics and agent outcomes</li>
+          <li>Studies on reward model quality in RLHF pipelines</li>
+          <li>Curriculum learning research with downstream evaluation</li>
+          <li>Data quality studies in supervised pretraining that inform RL context</li>
+          <li>Sim-to-real transfer literature (robotics, games, language)</li>
+          <li>Code generation agent training and evaluation studies</li>
+          <li>Theoretical work on reward hacking, Goodhart's law, and specification gaming with empirical validation</li>
+        </ul>
+      </div>
+      <div class="column-box">
+        <h4><span class="scope-tag scope-out">Out of Scope</span></h4>
+        <ul>
+          <li>Pure architecture comparisons without environment manipulation</li>
+          <li>Benchmark papers without training ablations</li>
+          <li>Studies examining only within-training-phase metrics without downstream evaluation</li>
+        </ul>
+      </div>
+    </div>
+    
+    <h3>Priority Sources</h3>
+    <ul>
+      <li>NeurIPS, ICML, ICLR proceedings (2019–present)</li>
+      <li>arXiv cs.LG, cs.AI, cs.CL (with citation threshold for quality filtering)</li>
+      <li>DeepMind, OpenAI, Anthropic technical reports</li>
+      <li>JMLR for foundational theoretical work</li>
+      <li>Cognitive science and neuroscience literature for analogical frameworks (where ML validation exists)</li>
+    </ul>
+    
+    <h2>4. Methodology and Analysis Plan</h2>
+    
+    <h3>Phase 1: Systematic Literature Search</h3>
+    <ul>
+      <li><strong>Database search:</strong> Semantic Scholar API, arXiv, ACL Anthology, CMU library access for paywalled venues</li>
+      <li><strong>Keyword clusters:</strong>
+        <ul>
+          <li><code>{"reward misspecification" OR "reward hacking" OR "specification gaming"} AND {"downstream" OR "transfer" OR "generalization"}</code></li>
+          <li><code>{"curriculum learning"} AND {"long-term" OR "retention" OR "forgetting"}</code></li>
+          <li><code>{"RLHF" OR "preference learning"} AND {"data quality" OR "annotation"}</code></li>
+          <li><code>{"training environment"} AND {"robustness" OR "brittleness"}</code></li>
+          <li><code>{"code generation" OR "coding agent"} AND {"reinforcement learning"}</code></li>
+        </ul>
+      </li>
+      <li>Snowball sampling from highly-cited papers</li>
+      <li>Expert consultation for unpublished/in-progress work (if accessible)</li>
+    </ul>
+    
+    <h3>Phase 2: Evidence Extraction and Coding</h3>
+    <p>For each included study, extract:</p>
+    <ul>
+      <li>Environment characteristics manipulated (independent variables)</li>
+      <li>Outcome measures (dependent variables)</li>
+      <li>Training phase metrics vs. downstream/transfer metrics (critical distinction)</li>
+      <li>Effect sizes where reported</li>
+      <li>Agent architecture and scale</li>
+      <li>Statistical methodology and power</li>
+    </ul>
+    
+    <h3>Phase 3: Meta-Analysis (if sufficient homogeneity)</h3>
+    <ul>
+      <li>Random-effects meta-analysis for comparable outcome measures</li>
+      <li>Moderator analysis by: agent scale (parameters), task domain (robotics, games, language, code), type of environment deficit (reward vs. dynamics vs. fidelity)</li>
+      <li>Heterogeneity assessment (I², Q statistic)</li>
+      <li>Publication bias assessment (funnel plots, Egger's test)</li>
+      <li>Sensitivity analysis excluding low-quality studies</li>
+    </ul>
+    
+    <h3>Phase 4: Narrative Synthesis</h3>
+    <p>For research questions where meta-analysis is not feasible due to heterogeneity:</p>
+    <ul>
+      <li>Thematic analysis of findings</li>
+      <li>Evidence quality grading (adapted GRADE framework for ML)</li>
+      <li>Identification of gaps and contradictions</li>
+      <li>Theoretical framework development</li>
+    </ul>
+    
+    <h2>5. Specific Hypotheses to Evaluate</h2>
+    <p>Based on preliminary reading and theoretical priors, we hypothesize:</p>
+    
+    <div class="hypothesis-box">
+      <p><strong>H1:</strong> Agents trained with reward noise/misspecification will show reduced generalization to novel tasks even after reward function correction, due to learned representations optimized for exploiting rather than understanding the task structure.</p>
+    </div>
+    
+    <div class="hypothesis-box">
+      <p><strong>H2:</strong> Inconsistent or unpredictable reward schedules during training will produce agents with reduced exploratory behavior in novel environments (analogous to learned helplessness).</p>
+    </div>
+    
+    <div class="hypothesis-box">
+      <p><strong>H3:</strong> Agents trained with execution-based feedback on code will show superior debugging capabilities compared to agents trained only on static correctness signals, even when final benchmark performance is equivalent.</p>
+    </div>
+    
+    <div class="hypothesis-box">
+      <p><strong>H4:</strong> Curriculum pacing that respects agent learning dynamics (adaptive difficulty) will produce better transfer learning efficiency than fixed curricula, even when total training compute is matched.</p>
+    </div>
+    
+    <div class="hypothesis-box">
+      <p><strong>H5:</strong> Training environment characteristics will have larger effects on out-of-distribution generalization than on in-distribution benchmark performance, suggesting current evaluation practices underestimate environment quality importance.</p>
+    </div>
+    
+    <h2>6. Deliverables</h2>
+    
+    <div class="deliverables-grid">
+      <div class="deliverable-card">
+        <h4>📄 Systematic Review Report</h4>
+        <p>PRISMA-compliant documentation with evidence tables, quality assessment, and narrative synthesis organized by research question.</p>
+      </div>
+      <div class="deliverable-card">
+        <h4>📊 Meta-Analysis Results</h4>
+        <p>Forest plots, moderator analysis, heterogeneity assessments, and publication bias evaluation (if feasible).</p>
+      </div>
+      <div class="deliverable-card">
+        <h4>🎯 Practical Recommendations</h4>
+        <p>Evidence-graded recommendations for training environment design, knowledge gaps, and prioritized environment characteristics.</p>
+      </div>
+      <div class="deliverable-card">
+        <h4>📚 Annotated Bibliography</h4>
+        <p>All reviewed papers with relevance ratings and key findings, suitable for team onboarding.</p>
+      </div>
+      <div class="deliverable-card">
+        <h4>💻 Dataset &amp; Code Repository</h4>
+        <p>Extraction spreadsheets, meta-analysis code (R/Python), and search documentation for reproducibility.</p>
+      </div>
+    </div>
+    
+    <h2>7. Constraints and Resources</h2>
+    
+    <div class="constraints-resources">
+      <div class="resource-section resources">
+        <h4>Available Resources</h4>
+        <ul>
+          <li><strong>Literature Access:</strong> CMU library institutional access (ACM DL, IEEE Xplore, Springer, Elsevier, all major venues)</li>
+          <li><strong>Compute:</strong> CPU cluster availability for computational meta-analysis, text processing, embedding-based paper clustering</li>
+          <li><strong>Personnel:</strong> [To be specified]</li>
+          <li><strong>Timeline:</strong> [To be specified]</li>
+        </ul>
+      </div>
+      <div class="resource-section constraints">
+        <h4>Constraints</h4>
+        <ul>
+          <li><strong>Publication Lag:</strong> Cutting-edge RL research appears on arXiv 6–12 months before peer review; high-quality preprints will be included but flagged</li>
+          <li><strong>Heterogeneity:</strong> RL research varies enormously in task domain, architecture, and methodology; formal meta-analysis may only be possible for subsets</li>
+          <li><strong>Reporting Standards:</strong> Many ML papers lack effect sizes or confidence intervals; author contact or figure estimation may be required</li>
+          <li><strong>Negative Results Bias:</strong> Null findings may be underrepresented; active search for grey literature planned</li>
+          <li><strong>Terminology Inconsistency:</strong> "Bad environment" operationalized differently across papers; taxonomy development included in Phase 1</li>
+        </ul>
+      </div>
+    </div>
+    
+    <h3>Risk Mitigation</h3>
+    <ul>
+      <li>If formal meta-analysis proves infeasible, we will produce a high-quality narrative systematic review with vote-counting and evidence grading</li>
+      <li>If literature is sparser than expected in certain areas, we will document gaps as findings and recommend primary research priorities</li>
+    </ul>
+    
+    <section class="success-criteria">
+      <h2>8. Success Criteria</h2>
+      <p>This review will be considered successful if it:</p>
+      <ol>
+        <li>Provides <strong>actionable, evidence-graded guidance</strong> on which training environment characteristics most strongly affect downstream agent capabilities</li>
+        <li>Identifies <strong>specific measurement practices</strong> we should adopt to detect environment quality problems before they compound</li>
+        <li>Clarifies whether the <strong>model-centric, adaptive training philosophy</strong> has empirical support, is contradicted by evidence, or represents an untested hypothesis requiring primary research</li>
+        <li>Produces a <strong>reusable methodology and dataset</strong> for ongoing literature monitoring as this fast-moving field evolves</li>
+      </ol>
+    </section>
+    
+    <div class="final-title">
+      <p><strong>Proposed Title for Final Report:</strong><br>
+      "Does Training Environment Quality Have Lasting Effects? A Systematic Review and Meta-Analysis of Adverse RL Training Conditions and Downstream Agent Performance"</p>
+    </div>
+    
+  </div>
+</body>
+</html>
