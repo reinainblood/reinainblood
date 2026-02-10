@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canine Olfactory Development</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        :root {
+            --primary-color: #1565C0;
+            --secondary-color: #009688;
+            --accent-color: #FF6F00;
+            --text-dark: #1a237e;
+            --text-light: #ffffff;
+            --bg-light: #e3f2fd;
+            --card-bg: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .poster-container {
+            max-width: 720px;
+            min-height: 960px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .stage {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .stage:hover {
+            transform: translateX(5px);
+        }
+        
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        
+        .stage-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .stage-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .stage-period {
+            font-size: 14px;
+            color: var(--secondary-color);
+            font-weight: 500;
+            background-color: rgba(0, 150, 136, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        
+        .stage-content {
+            display: none;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .stage.active .stage-content {
+            display: block;
+        }
+        
+        .stage.active .stage-title {
+            color: var(--secondary-color);
+        }
+        
+        .timeline-item {
+            margin-bottom: 12px;
+            padding-left: 15px;
+            border-left: 2px solid var(--accent-color);
+        }
+        
+        .timeline-item h4 {
+            font-size: 15px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+        }
+        
+        .timeline-item p {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .image-container {
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .image-caption {
+            font-size: 12px;
+            color: #777;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        .highlight-box {
+            background-color: rgba(255, 111, 0, 0.05);
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .highlight-box h4 {
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+        
+        .highlight-box p {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(21, 101, 192, 0.05);
+            border-radius: 6px;
+        }
+        
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #777;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Interactive element styles */
+        .interactive-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .interactive-btn:hover {
+            background-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="poster-container">
+        <header>
+            <h1>Canine Olfactory Development</h1>
+            <div class="subtitle">From Embryogenesis to Adulthood</div>
+        </header>
+        
+        <div class="stage active" onclick="toggleStage(this)">
+            <div class="stage-header">
+                <div class="stage-title">
+                    <i class="material-icons stage-icon">science</i>
+                    Embryonic Development
+                </div>
+                <div class="stage-period">Days 2-35</div>
+            </div>
+            <div class="stage-content">
+                <div class="timeline-item">
+                    <h4>Period of the Ovum (Days 2-17)</h4>
+                    <p>Fertilization occurs in the uterine tube, followed by rapid cell division. The zygote develops into a blastocyst and migrates to the uterus.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Embryonic Stage (Days 19-35)</h4>
+                    <p>The neural plate forms cranial to the primitive streak by day 15, followed by neural tube closure. By day 23, the embryo has otic placode and lens placode.</p>
+                </div>
+                <div class="image-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/b3b64d49280b.png" alt="Brain Development">
+                    <div class="image-caption">Brain development from fetal to postnatal stages</div>
+                </div>
+                <div class="highlight-box">
+                    <h4>Key Developmental Milestone</h4>
+                    <p>By day 30, sensory hairs on the muzzle begin to develop, marking the early formation of the olfactory region.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stage" onclick="toggleStage(this)">
+            <div class="stage-header">
+                <div class="stage-title">
+                    <i class="material-icons stage-icon">pregnant_woman</i>
+                    Fetal Development
+                </div>
+                <div class="stage-period">Days 35-Birth</div>
+            </div>
+            <div class="stage-content">
+                <p>During the fetal period, the olfactory system continues to develop and refine its structure. The olfactory epithelium begins to form the complex maze structure that will later become the dog's powerful scent detection system.</p>
+                <div class="image-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/bb6b4c25506c.png" alt="Olfactory System">
+                    <div class="image-caption">Structure of the canine olfactory system with turbinates</div>
+                </div>
+                <div class="highlight-box">
+                    <h4>Olfactory Bulb Development</h4>
+                    <p>The olfactory bulb begins to form as a distinct structure, establishing the neural pathways that will connect the nose to the brain.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stage" onclick="toggleStage(this)">
+            <div class="stage-header">
+                <div class="stage-title">
+                    <i class="material-icons stage-icon">pets</i>
+                    Postnatal Development
+                </div>
+                <div class="stage-period">Birth to 4 Weeks</div>
+            </div>
+            <div class="stage-content">
+                <div class="timeline-item">
+                    <h4>Neonatal Stage (0-2 weeks)</h4>
+                    <p>Puppies have only taste and touch at this stage. They are completely dependent on their mother and have very limited movement.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Transitional Stage (2-4 weeks)</h4>
+                    <p>The sense of hearing and smell develops during this period. Eyes begin to open, and puppies start interacting with their littermates.</p>
+                </div>
+                <div class="image-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/501b930732ae.jpg" alt="Puppy Development">
+                    <div class="image-caption">Puppy development stages</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stage" onclick="toggleStage(this)">
+            <div class="stage-header">
+                <div class="stage-title">
+                    <i class="material-icons stage-icon">psychology</i>
+                    Adult Olfactory System
+                </div>
+                <div class="stage-period">Maturity</div>
+            </div>
+            <div class="stage-content">
+                <p>The adult dog has an extraordinarily developed olfactory system that far exceeds human capabilities. The olfactory epithelium forms a complex maze that folds over bony protrusions called turbinates.</p>
+                <div class="image-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/faa503ea9657.jpg" alt="Adult Olfactory System">
+                    <div class="image-caption">Anatomy of the canine olfactory system</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">10,000-100,000x</div>
+                        <div class="stat-label">More sensitive than humans</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">0.31%</div>
+                        <div class="stat-label">Of total brain volume</div>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    <h4>Neural Pathways</h4>
+                    <p>Dogs have hundreds of millions more olfactory neurons than humans, allowing them to detect and process a vast array of scents.</p>
+                </div>
+                <button class="interactive-btn" onclick="event.stopPropagation(); showNeuralPathways()">Explore Neural Pathways</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Information compiled from veterinary embryology and neuroscience research</p>
+        </footer>
+    </div>
+    
+    <script>
+        function toggleStage(element) {
+            const allStages = document.querySelectorAll('.stage');
+            allStages.forEach(stage => {
+                if (stage !== element) {
+                    stage.classList.remove('active');
+                }
+            });
+            element.classList.toggle('active');
+        }
+        
+        function showNeuralPathways() {
+            const pathwaysContent = document.querySelector('.stage:nth-child(4) .stage-content');
+            const existingInfo = document.getElementById('neural-pathways-info');
+            
+            if (existingInfo) {
+                existingInfo.remove();
+                return;
+            }
+            
+            const newPathways = document.createElement('div');
+            newPathways.id = 'neural-pathways-info';
+            newPathways.className = 'highlight-box';
+            newPathways.innerHTML = `
+                <h4>Neural Pathway Details</h4>
+                <p>When a dog inhales, scent molecules bind to receptors in the olfactory epithelium. These signals are transmitted via the olfactory nerve to the olfactory bulb, then to the olfactory cortex, amygdala (for emotional processing), and entorhinal cortex (for memory). This direct connection to the limbic system explains the powerful link between scent and emotion/memory in dogs.</p>
+            `;
+            pathwaysContent.appendChild(newPathways);
+        }
+        
+        // P5.js background animation
+        function setup() {
+            let canvas = createCanvas(windowWidth, windowHeight);
+            canvas.parent('canvas-container');
+            background(245, 245, 245);
+        }
+        
+        let particles = [];
+        
+        function draw() {
+            clear();
+            
+            // Add new particles occasionally
+            if (frameCount % 15 === 0) {
+                particles.push({
+                    x: random(width),
+                    y: height + 10,
+                    size: random(3, 8),
+                    speed: random(1, 3),
+                    opacity: random(100, 200),
+                    color: color(random(20, 60), random(90, 140), random(180, 220))
+                });
+            }
+            
+            // Update and draw particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i];
+                p.y -= p.speed;
+                p.opacity -= 0.5;
+                
+                noStroke();
+                fill(red(p.color), green(p.color), blue(p.color), p.opacity);
+                ellipse(p.x, p.y, p.size);
+                
+                // Remove particles that are off-screen or faded
+                if (p.y < -10 || p.opacity <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            
+            // Draw connections between nearby particles
+            stroke(0, 150, 136, 40);
+            strokeWeight(1);
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    let d = dist(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+                    if (d < 100) {
+                        line(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+                    }
+                }
+            }
+        }
+        
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight);
+        }
+    </script>
+</body>
+</html>
