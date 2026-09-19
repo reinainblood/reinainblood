@@ -1,58 +1,59 @@
+# Kirsten Ruge
 
-<div align="center">
-<img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/power-to-the-linux-q75JopsPSGeUe0T5tGSCf42fS9dcvr.svg" alt="Power to the Linux" width="45%">
-</div>
+### Evaluation scientist · agentic systems · AI safety · cybersecurity
 
-<div align="center">
+I build and audit evaluations for AI systems that act in real environments. My work sits at the boundary between model behavior, agent harnesses, tools, sandboxes, verifiers, and the infrastructure that can quietly change what a benchmark result means.
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=9D00FF&center=true&vCenter=true&width=600&lines=Hi%2C+I'm+Kirsten.+Welcome+to+my+Github!;I+write+code+and+engineer+platforms;Eager+to+collaborate!)](https://git.io/typing-svg)
+I work in public through [Hive Fidelity AI](https://hivefidelity.ai), an independent evaluation-science lab. We are not for hire. We are open to non-paid open-source work, volunteer third-party safety evaluation, and research collaboration.
 
-</div>
+[Research notes](https://hivefidelity.ai/notes/) · [Hive Fidelity AI](https://hivefidelity.ai) · [LinkedIn](https://www.linkedin.com/in/kruge)
 
-<p align="center" style="color: #FFFFFF;">
-🚀 Software Engineer | 🐧 DevOps/Platform | 🌟 Newbie Open Source Contributor
-</p>
+## What I work on
 
-<div align="center">
+- **Agentic evaluation:** separating model capability from prompts, tools, memory, orchestration, environment behavior, and grading.
+- **Evaluation validity:** verifier falsification, reward-hacking resistance, task repair, contamination controls, and evidence-preserving result reconciliation.
+- **Safety and cyber:** prompt-injection, harmful-behavior, mental-health safety, and controlled cyber-capability evaluations.
+- **Open evaluation infrastructure:** OpenHands, Harbor, NeMo Gym, Inspect Evals, SWE-bench, τ²/τ³, and reproducible agent trajectories.
 
-[![Your GitHub stats](https://github-readme-stats-six-delta-99.vercel.app/api?username=reinainblood&show_icons=true&show_private=true&theme=midnight-purple)](https://github.com/anuraghazra/github-readme-stats) 
+## Current upstream pull requests
 
-</div>
-<div align="center">
-  <img src="https://github-profile-widgets.vercel.app/api/og?type=issues" alt="Assigned Issues" width="45%">
-  <img src="https://github-profile-widgets.vercel.app/api/og?type=activities" alt="Recent Activity" width="45%">
-</div>
+These are the public contributions currently in review. Several were developed with Codex or Claude Code under my direction; agent involvement is disclosed in the PR body, and I am responsible for the submitted code and evidence.
 
- 🛠️ Technologies & Tools
+| Project | Contribution |
+|---|---|
+| OpenHands CLI | [#815 — Add an unattended execution contract for benchmark and CI harnesses](https://github.com/OpenHands/OpenHands-CLI/pull/815) |
+| Harbor | [#3009 — Add a public OpenHands CLI adapter with ATIF trajectories and Modal V2 validation](https://github.com/harbor-framework/harbor/pull/3009) |
+| Harbor | [#2851 — Round-trip versioned package datasets without invalid persisted configs](https://github.com/harbor-framework/harbor/pull/2851) |
+| Inspect Evals | [#2424 — Prevent AssistantBench set-literal answers from crashing the scorer](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2424) |
+| Inspect Evals | [#2425 — Score prompt-injection exfiltration against each sample's actual canaries](https://github.com/UKGovernmentBEIS/inspect_evals/pull/2425) |
+| Giskard OSS | [#2826 — Reject empty keyword and regex checks that otherwise pass every response](https://github.com/Giskard-AI/giskard-oss/pull/2826) |
+| VLMEvalKit | [#1684 — Preserve dataset configuration through `**kwargs` constructor chains](https://github.com/open-compass/VLMEvalKit/pull/1684) |
+| SWE-bench Multilingual | [#11 — Remove the broken conda shell hook from all 300 task images](https://github.com/SWE-bench/swe-bench-multilingual-tasks/pull/11) |
+| SWE-Bench ProMax | [#1 — Prevent task images from exposing future Git history](https://github.com/key4127/SWE-Bench-ProMax/pull/1) |
 
-![Typescript](https://img.shields.io/badge/-TypeScript-black?style=flat-square&logo=typescript)
-![Go](https://img.shields.io/badge/-Go-black?style=flat-square&logo=go)
-![Node.js](https://img.shields.io/badge/-Node.js-black?style=flat-square&logo=Node.js)
-![Python](https://img.shields.io/badge/-Python-black?style=flat-square&logo=Python)
-![Linux](https://img.shields.io/badge/-Linux-black?style=flat-square&logo=Linux)
-![Terraform](https://img.shields.io/badge/-Terraform-black?style=flat-square&logo=terraform)
-![Ansible](https://img.shields.io/badge/-Ansible-black?style=flat-square&logo=ansible)
-![Kubernetes](https://img.shields.io/badge/-Kubernetes-black?style=flat-square&logo=kubernetes)
+## Public NeMo Gym work
 
-## 🌟 Open Source projects I am actively contributing to (early stages, not much to show yet!)
+My NeMo Gym work is developed and reviewed in a public fork before any upstream submission decision. The current integration set includes real execution evidence, pinned source data, deterministic preparation, and benchmark-specific verification rather than score-import shims.
 
-🟣 [Flipt.io](https://github.com/flipt-io) <br>
-🟣 [f3d](https://github.com/f3d-app/f3d) <br>
-🟣 [Prometheus](https://github.com/prometheus) <br>
-🟣 [Ghost Call] (https://github.com/darknode66/darknodetest) - still in dev
+| Integration | Public work |
+|---|---|
+| Modal sandbox provider | [reinainblood/Gym#1](https://github.com/reinainblood/Gym/pull/1) — V2 sandbox lifecycle, file transfer, networking controls, registry integration, and cleanup |
+| InjecAgent | [reinainblood/Gym#2](https://github.com/reinainblood/Gym/pull/2) — indirect prompt-injection benchmark adapter |
+| HarmBench | [reinainblood/Gym#3](https://github.com/reinainblood/Gym/pull/3) — DirectRequest protocol with target and classifier separation |
+| Safe-Child-LLM | [reinainblood/Gym#4](https://github.com/reinainblood/Gym/pull/4) — human-evaluation workflow across developmental prompt sets |
+| FACTS Grounding v2 | [reinainblood/Gym#5](https://github.com/reinainblood/Gym/pull/5) — public set, official two-judge protocol, calibration, and reproducible reports |
+| VERA-MH | [reinainblood/Gym#6](https://github.com/reinainblood/Gym/pull/6) — multi-turn mental-health safety evaluation with the official rubric judge |
 
-## 🌟 Featured Projects
+Related public benchmark surfaces already in the upstream ecosystems include [τ² in NeMo Gym](https://github.com/NVIDIA-NeMo/Gym/tree/main/benchmarks/tau2) and [τ³ in Harbor](https://github.com/harbor-framework/harbor/tree/main/adapters/tau3-bench). I work on the agent, environment, calibration, and verifier boundaries around both.
 
-🟣 [interview-buddy](https://github.com/reinainblood/interview-buddy)
-🟣 [Personal blog, made with Go/Hugo](https://reinainblood.github.io)
+## Agent and harness forks
 
-## 🤝 Connect With Me
+- **[kimi-pi](https://github.com/reinainblood/kimi-pi)** — a Pi fork used for evaluation-oriented agent work, including provider fault handling and a coding-agent resource ledger.
+- **[dsh-codex-connect](https://github.com/reinainblood/dsh-codex-connect)** — public DSH/Codex connector work, including Desktop context overrides and the tested 4.25–4.28 runtime adaptation branches.
+- **[Gym](https://github.com/reinainblood/Gym)** — public NeMo Gym integration fork and review boundary for reusable evaluation packages.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-9D00FF?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kruge)
-[![Blog](https://img.shields.io/badge/Blog-9D00FF?style=for-the-badge&logo=github&logoColor=white)](https://reinainblood.github.io)
-</div>
----
+## Evaluation doctrine
 
-<p align="center">
-<img src="https://komarev.com/ghpvc/?username=reinainblood&color=9D00FF&style=flat-square" alt="Profile views"/>
-</p>
+I do not treat a trajectory as a successful outcome, a deployed service as a completed evaluation, or a product stack leaderboard as a pure model ranking. Public results should carry the agent and harness configuration, task and verifier provenance, invalid-infrastructure accounting, complete trajectories, and enough evidence for someone else to disagree productively.
+
+That is the work. No animated typing cursor required.
