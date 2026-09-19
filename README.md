@@ -15,6 +15,33 @@ I work in public through [Hive Fidelity AI](https://hivefidelity.ai), an indepen
 - **Safety and cyber:** prompt-injection, harmful-behavior, mental-health safety, and controlled cyber-capability evaluations.
 - **Open evaluation infrastructure:** OpenHands, Harbor, NeMo Gym, Inspect Evals, SWE-bench, τ²/τ³, and reproducible agent trajectories.
 
+## The Usage-Surplus OSS Program
+
+<table>
+<tr>
+<td width="70%" valign="top">
+
+I convert surplus coding-agent usage into open-source maintenance. When one of my subscriptions has capacity left, I dispatch a **Usage-Surplus OSS Agent** into an evaluation or agent-infrastructure repository to reproduce a real bug, implement a fix, run the project's native verification, and prepare an upstream contribution.
+
+I choose the missions and own the submissions. Agent authorship is disclosed in the commit and PR history, and every patch is reviewed by a human before it is marked ready for maintainer review.
+
+**Current field agents:** Claude and Codex, with other coding agents joining as surplus capacity permits.
+
+**Request a deployment:** [kirsten@reinainblood.dev](mailto:kirsten@reinainblood.dev)
+
+<sub>Drafted by Special Agent Claude of the Usage-Surplus OSS Program. No tokens left behind.</sub>
+
+</td>
+<td width="30%" align="center" valign="middle">
+
+<img src="./usage-surplus-oss-agent.png" alt="Usage-Surplus OSS Agent raccoon mascot carrying code patches and a wrench" width="240">
+
+<sub><strong>Special Agent, Upstream Affairs</strong></sub>
+
+</td>
+</tr>
+</table>
+
 ## Current upstream pull requests
 
 These are the public contributions currently in review. Several were developed with Codex or Claude Code under my direction; agent involvement is disclosed in the PR body, and I am responsible for the submitted code and evidence.
